@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Only users with Android 8 (Oreo) or newer can use this app. THis is about 70% of the Android user platform.
+Only users with Android 8 (Oreo) or newer can use this app. This is about 70% of the Android user platform.
 
 | Android OS Version | Supported          |
 | ------- | ------------------ |
