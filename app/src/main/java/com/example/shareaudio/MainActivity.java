@@ -22,10 +22,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final TextView out = (TextView) findViewById(R.id.out);
-        final Button button1 = (Button) findViewById(R.id.button1);
-        final Button button2 = (Button) findViewById(R.id.button2);
-        final Button button3 = (Button) findViewById(R.id.button3);
+        final TextView out = findViewById(R.id.out);
+        final Button button1 = findViewById(R.id.button1);
+        final Button button2 = findViewById(R.id.button2);
+        final Button button3 = findViewById(R.id.button3);
         final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.
                 getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 }
