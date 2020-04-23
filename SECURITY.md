@@ -11,4 +11,4 @@ Only users with Android 8 (Oreo) or newer can use this app. This is about 70% of
 
 ## Reporting a Vulnerability
 
-If you notice anything suspicious going on on this repository, please email mht3@illinois.edu. Thank you and enjoy!
+If you notice anything suspicious going on on this repository, please email the creators Matt (mht3@illinois.edu) or Eric (emonson2@illinois.edu). Thank you and enjoy!
