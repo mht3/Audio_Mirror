@@ -17,6 +17,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 0;
     private static final int REQUEST_DISCOVERABLE_BT = 0;
+    private boolean isOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +25,29 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         final TextView out = findViewById(R.id.out);
-        final Button button1 = findViewById(R.id.button1);
+        final Button toggleSwitch = findViewById(R.id.on_off);
         final Button button2 = findViewById(R.id.button2);
-        final Button button3 = findViewById(R.id.button3);
         final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.
                 getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            out.append("device not supported");
+            out.append("Device Not Supported");
         }
-        button1.setOnClickListener(new View.OnClickListener() {
+        toggleSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                if (!mBluetoothAdapter.isEnabled()) {
+                isOn = !isOn;
+                if (isOn == true && !mBluetoothAdapter.isEnabled()) {
                     Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    } else {
+                        mBluetoothAdapter.disable();
+                        Context context = getApplicationContext();
+                        CharSequence text = "TURNING_OFF BLUETOOTH";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
                 }
-            }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,17 +63,7 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                mBluetoothAdapter.disable();
-                Context context = getApplicationContext();
-                CharSequence text = "TURNING_OFF BLUETOOTH";
-                int duration = Toast.LENGTH_LONG;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-        });
+
     }
 
     @Override

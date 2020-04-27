@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:hapticFeedbackEnabled="false"
+    android:scrollbarAlwaysDrawVerticalTrack="false"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -12,20 +14,9 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" >
+        app:layout_constraintEnd_toEndOf="parent">
 
     </RelativeLayout>
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="410dp"
-        android:layout_height="727dp"
-        android:src="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/out"
@@ -35,66 +26,48 @@
         android:text="Share Audio"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191">
+        app:layout_constraintVertical_bias="0.091">
 
     </TextView>
 
-    <Button
-        android:id="@+id/button1"
-        style="@android:style/Widget.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:backgroundTint="#2196F3"
-        android:text="ON"
-        android:visibility="visible"
+    <Switch
+        android:id="@+id/on_off"
+        android:layout_width="184dp"
+        android:layout_height="33dp"
+        android:backgroundTint="#00962D2D"
+        android:buttonTint="#2196F3"
+        android:linksClickable="false"
+        android:longClickable="false"
+        android:text="Bluetooth     "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textOff="OFF"
+        android:textOn="ON"
+        android:textSize="18sp"
+        android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.326"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.262" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/on_off"
+        android:layout_alignLeft="@+id/on_off"
         android:backgroundTint="#2196F3"
         android:text="COVERAGE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.257"
+        app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.543" />
+        app:layout_constraintVertical_bias="0.402" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#2196F3"
-        android:text="Off"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.219"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434" /><![CDATA[
-
-
-
-    />
-
-
-
-]]>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
