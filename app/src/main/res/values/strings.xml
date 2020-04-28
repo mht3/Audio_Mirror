@@ -5,4 +5,6 @@
     <string name="bluetooth">BLUETOOTH</string>
     <string name="off">OFF</string>
     <string name="on">ON</string>
+    <string name="todo">TODO</string>
+    <string name="not_supported">Device Not Supported!</string>
 </resources>

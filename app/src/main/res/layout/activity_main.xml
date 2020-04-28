@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#00033E"
     android:hapticFeedbackEnabled="false"
     android:scrollbarAlwaysDrawVerticalTrack="false"
     tools:context=".MainActivity">
@@ -19,35 +21,48 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="466dp"
-        android:layout_height="736dp"
-        android:src="@android:color/holo_blue_dark"
-        android:tint="#210161"
+        android:id="@+id/logo"
+        android:layout_width="315dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/logo_title"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#002196F3"
-        android:backgroundTint="#87FF01"
-        android:text="Share Audio"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#A3FF00"
+        android:id="@+id/not_supported"
+        android:layout_width="355dp"
+        android:layout_height="43dp"
+        android:text="@string/not_supported"
+        android:textAlignment="center"
+        android:textColor="#FA0000"
+        android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/coverage_button"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@drawable/main_menu_button"
+        android:ellipsize="none"
+        android:text="@string/coverage"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.091">
-
-    </TextView>
+        app:layout_constraintVertical_bias="0.499" />
 
     <Switch
         android:id="@+id/on_off"
@@ -57,39 +72,25 @@
         android:buttonTint="#D6E748"
         android:linksClickable="false"
         android:longClickable="false"
-        android:text="Bluetooth     "
+        android:text="@string/bluetooth"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#BFF370"
         android:textColorHighlight="#B9EB83"
         android:textColorHint="#BEF086"
         android:textColorLink="#B4F86E"
         android:textIsSelectable="false"
-        android:textOff="OFF"
-        android:textOn="ON"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
         android:textSize="18sp"
+        android:thumbTint="#D6E748"
+        android:trackTint="#D6E748"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.198"
+        app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.262" />
-
-    <Button
-        android:id="@+id/coverage_button"
-        android:layout_width="151dp"
-        android:layout_height="147dp"
-        android:background="@drawable/round_button"
-        android:text="Coverage"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.852" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

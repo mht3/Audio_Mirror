@@ -1,5 +1,6 @@
 package com.example.shareaudio;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +22,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        final TextView out = findViewById(R.id.out);
+        final ImageView logo = findViewById(R.id.logo);
         final Button toggleSwitch = findViewById(R.id.on_off);
+        final TextView not_supported = findViewById(R.id.not_supported);
+        not_supported.setVisibility(View.INVISIBLE);
         final Button coverage = findViewById(R.id.coverage_button);
         final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.
                 getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            out.append("Device Not Supported");
+            coverage.setEnabled(false);
+            toggleSwitch.setEnabled(false);
+            toggleSwitch.setVisibility(View.INVISIBLE);
+            not_supported.setVisibility(View.VISIBLE);
         }
         toggleSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
