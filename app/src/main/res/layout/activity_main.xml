@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:backgroundTint="#00033E"
+    android:backgroundTint="#00111B"
     android:hapticFeedbackEnabled="false"
     android:scrollbarAlwaysDrawVerticalTrack="false"
     tools:context=".MainActivity">
@@ -68,6 +68,7 @@
         android:id="@+id/on_off"
         android:layout_width="184dp"
         android:layout_height="33dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#00962D2D"
         android:buttonTint="#D6E748"
         android:linksClickable="false"
@@ -86,11 +87,11 @@
         android:trackTint="#D6E748"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852" />
+        app:layout_constraintTop_toBottomOf="@+id/coverage_button"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
