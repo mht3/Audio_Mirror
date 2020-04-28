@@ -18,13 +18,29 @@
 
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="466dp"
+        android:layout_height="736dp"
+        android:src="@android:color/holo_blue_dark"
+        android:tint="#210161"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#002196F3"
+        android:backgroundTint="#87FF01"
         android:text="Share Audio"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#A3FF00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -38,36 +54,42 @@
         android:layout_width="184dp"
         android:layout_height="33dp"
         android:backgroundTint="#00962D2D"
-        android:buttonTint="#2196F3"
+        android:buttonTint="#D6E748"
         android:linksClickable="false"
         android:longClickable="false"
         android:text="Bluetooth     "
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#BFF370"
+        android:textColorHighlight="#B9EB83"
+        android:textColorHint="#BEF086"
+        android:textColorLink="#B4F86E"
+        android:textIsSelectable="false"
         android:textOff="OFF"
         android:textOn="ON"
         android:textSize="18sp"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.198"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.262" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/on_off"
-        android:layout_alignLeft="@+id/on_off"
-        android:backgroundTint="#2196F3"
-        android:text="COVERAGE"
+        android:id="@+id/coverage_button"
+        android:layout_width="151dp"
+        android:layout_height="147dp"
+        android:background="@drawable/round_button"
+        android:text="Coverage"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.402" />
+        app:layout_constraintVertical_bias="0.499" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
