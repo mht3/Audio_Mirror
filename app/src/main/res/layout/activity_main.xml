@@ -45,12 +45,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.02" />
 
     <Button
         android:id="@+id/coverage_button"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="160dp"
+        android:layout_height="158dp"
         android:background="@drawable/main_menu_button"
         android:ellipsize="none"
         android:text="@string/coverage"
@@ -58,17 +58,16 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.304" />
 
     <Switch
         android:id="@+id/on_off"
         android:layout_width="184dp"
         android:layout_height="33dp"
-        android:layout_marginTop="24dp"
         android:backgroundTint="#00962D2D"
         android:buttonTint="#D6E748"
         android:linksClickable="false"
@@ -86,12 +85,37 @@
         android:thumbTint="#D6E748"
         android:trackTint="#D6E748"
         android:typeface="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coverage_button" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="319dp"
+        android:layout_height="140dp"
+        android:background="#D6D7D7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coverage_button"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.835" />
+
+    <TextView
+        android:id="@+id/pairedDevices"
+        android:layout_width="171dp"
+        android:layout_height="36dp"
+        android:layout_alignStart="@+id/listView"
+        android:text="@string/paired_devices"
+        android:textColor="#D6E748"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintEnd_toEndOf="@+id/listView"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/listView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
