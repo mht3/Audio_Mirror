@@ -58,6 +58,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         super.onCreate(savedInstanceState);
         devices = new ArrayList<>();
         setContentView(R.layout.activity_main);
+        final Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        final ImageView logo = findViewById(R.id.logo);
+        final Button toggleSwitch = findViewById(R.id.on_off);
+        final TextView not_supported = findViewById(R.id.not_supported);
+        not_supported.setVisibility(View.INVISIBLE);
+        final Button discover = findViewById(R.id.discover);
+        listView = findViewById(R.id.listView);
 
         //Broadcasts when band state changes (ie:pairing)
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
@@ -67,14 +75,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         listView.setOnItemClickListener(MainActivity.this);
 
-        final Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        final ImageView logo = findViewById(R.id.logo);
-        final Button toggleSwitch = findViewById(R.id.on_off);
-        final TextView not_supported = findViewById(R.id.not_supported);
-        not_supported.setVisibility(View.INVISIBLE);
-        final Button discover = findViewById(R.id.discover);
-        listView = findViewById(R.id.listView);
         //setPairedDevices(listView);
         if (bluetoothAdapter == null) {
             discover.setEnabled(false);
@@ -210,17 +210,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         Log.d(TAG, "Trying to pair with " + deviceName);
         devices.get(position).createBond();
     }
-//    public void setPairedDevices(View v) {
-//        deviceSet = bluetoothAdapter.getBondedDevices();
-//        pairedDevices = new HashMap<>();
-//        for (BluetoothDevice bt : deviceSet) {
-//            pairedDevices.put(bt.getName(), bt);
-//            Toast.makeText(getApplicationContext(), "Showing Paired Devices", Toast.LENGTH_SHORT).show();
-//            final ArrayAdapter adapter = new ArrayAdapter(this,
-//                    android.R.layout.simple_list_item_activated_1, pairedDevices.keySet().toArray());
-//            listView.setAdapter(adapter);
-//        }
-//    }
-//
+
+    /* public void setPairedDevices(View v) {
+        deviceSet = bluetoothAdapter.getBondedDevices();
+        pairedDevices = new HashMap<>();
+        for (BluetoothDevice bt : deviceSet) {
+            pairedDevices.put(bt.getName(), bt);
+            Toast.makeText(getApplicationContext(), "Showing Paired Devices", Toast.LENGTH_SHORT).show();
+            final ArrayAdapter adapter = new ArrayAdapter(this,
+                    android.R.layout.simple_list_item_activated_1, pairedDevices.keySet().toArray());
+            listView.setAdapter(adapter);
+        }
+    } */
+
 
 }

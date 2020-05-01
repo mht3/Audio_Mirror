@@ -1,5 +1,6 @@
 package com.example.shareaudio;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -24,24 +25,33 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
         mViewResourceId = tvResourceId;
     }
 
+    @SuppressLint("SetTextI18n")
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = mLayoutInflater.inflate(mViewResourceId, null);
+        View vi = convertView;
+        BluetoothDevice device = mDevices.get(position);
+        if (vi == null) {
+            vi = mLayoutInflater.inflate(R.layout.device_adapter_view, null);
+        }
+        TextView deviceName = (TextView) vi.findViewById(R.id.deviceName);
+        deviceName.setText(device.getName());
+        TextView deviceAddress = (TextView) vi.findViewById(R.id.deviceAddress);
+        deviceAddress.setText(device.getAddress());
+        return vi;
+        /* convertView = mLayoutInflater.inflate(mViewResourceId, null);
 
         BluetoothDevice device = mDevices.get(position);
 
         if (device != null) {
             TextView deviceName = convertView.findViewById(R.id.deviceName);
-            TextView deviceAdress = convertView.findViewById(R.id.deviceAddress);
+            TextView deviceAddress = convertView.findViewById(R.id.deviceAddress);
 
             if (deviceName != null) {
                 deviceName.setText(device.getName());
             }
-            if (deviceAdress != null) {
-                deviceAdress.setText(device.getAddress());
+            if (deviceAddress != null) {
+                deviceAddress.setText(device.getAddress());
             }
         }
-
-        return convertView;
+        return convertView; */
     }
-
 }
