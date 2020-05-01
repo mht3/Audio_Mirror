@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Share Audio</string>
     <string name="share_audio">Share Audio</string>
-    <string name="coverage">COVERAGE</string>
+    <string name="discover">DISCOVER</string>
     <string name="bluetooth">BLUETOOTH</string>
     <string name="off">OFF</string>
     <string name="on">ON</string>
     <string name="todo">TODO</string>
     <string name="not_supported">Device Not Supported!</string>
-    <string name="paired_devices">PAIRED DEVICES:</string>
+    <string name="devices">DEVICES:</string>
 
 
 </resources>

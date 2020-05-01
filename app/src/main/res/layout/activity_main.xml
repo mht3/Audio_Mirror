@@ -48,12 +48,12 @@
         app:layout_constraintVertical_bias="0.02" />
 
     <Button
-        android:id="@+id/coverage_button"
+        android:id="@+id/discover"
         android:layout_width="160dp"
         android:layout_height="158dp"
         android:background="@drawable/main_menu_button"
         android:ellipsize="none"
-        android:text="@string/coverage"
+        android:text="@string/discover"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -88,7 +88,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coverage_button" />
+        app:layout_constraintTop_toBottomOf="@+id/discover" />
 
     <ListView
         android:id="@+id/listView"
@@ -99,7 +99,7 @@
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coverage_button"
+        app:layout_constraintTop_toBottomOf="@+id/discover"
         app:layout_constraintVertical_bias="0.835" />
 
     <TextView
@@ -107,7 +107,7 @@
         android:layout_width="171dp"
         android:layout_height="36dp"
         android:layout_alignStart="@+id/listView"
-        android:text="@string/paired_devices"
+        android:text="@string/devices"
         android:textColor="#D6E748"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/listView"
