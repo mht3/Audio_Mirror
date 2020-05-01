@@ -1,10 +1,6 @@
 package com.example.shareaudio;
 
-import android.Manifest;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -24,9 +20,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-import java.util.zip.Inflater;
 
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
@@ -48,7 +42,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
      */
     private ListView listView;
     private DeviceListAdapter deviceListAdapter;
-    private ArrayList<String> availableDevices;
+    private ArrayList<String> bondedDevices;
 
 
     @Override
@@ -120,7 +114,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                     bluetoothAdapter.cancelDiscovery();
 
                     Log.d(TAG, "btnDiscover: Canceling discovery.");
-                    //check BT permissions in manifest
 
                     bluetoothAdapter.startDiscovery();
                     listView.setOnItemClickListener(MainActivity.this);
@@ -180,22 +173,31 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
         bluetoothAdapter.cancelDiscovery();
         String item = (String) listView.getItemAtPosition(position);
-        Toast.makeText(this,"Pairing with : " + item,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Pairing with " + item,Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onItemClick: You Clicked on a device.");
         //devices.get(position).createBond();
 
     }
 
     public void setPairedDevices(View v) {
+        Toast.makeText(getApplicationContext(), "Showing Paired Devices", Toast.LENGTH_SHORT).show();
         deviceSet = bluetoothAdapter.getBondedDevices();
-        availableDevices = new ArrayList<>();
+        bondedDevices = new ArrayList<>();
         for (BluetoothDevice bt : deviceSet) {
-            availableDevices.add(bt.getName());
-            Toast.makeText(getApplicationContext(), "Showing Paired Devices", Toast.LENGTH_SHORT).show();
-            final ArrayAdapter adapter = new ArrayAdapter(this,
-                    android.R.layout.simple_list_item_activated_1, availableDevices);
-            listView.setAdapter(adapter);
+            if (bt.getType() == BluetoothDevice.DEVICE_TYPE_CLASSIC) {
+                bondedDevices.add(bt.getName());
+            } else {
+                deviceSet.remove(bt);
+            }
         }
+        if (bondedDevices.size() == 0) {
+            Toast.makeText(getApplicationContext(),
+                    "No devices found. Please make sure you're within range of a device.",
+                    Toast.LENGTH_LONG).show();
+        }
+        final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_activated_1, bondedDevices);
+        listView.setAdapter(adapter);
     }
 
 
