@@ -68,6 +68,7 @@
         android:id="@+id/on_off"
         android:layout_width="184dp"
         android:layout_height="33dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#00962D2D"
         android:buttonTint="#D6E748"
         android:linksClickable="false"
