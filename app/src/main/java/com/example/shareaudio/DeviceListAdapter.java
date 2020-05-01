@@ -25,16 +25,16 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
         mViewResourceId = tvResourceId;
     }
 
-    @SuppressLint("SetTextI18n")
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         BluetoothDevice device = mDevices.get(position);
         if (vi == null) {
             vi = mLayoutInflater.inflate(R.layout.device_adapter_view, null);
         }
-        TextView deviceName = (TextView) vi.findViewById(R.id.deviceName);
+        TextView deviceName = vi.findViewById(R.id.deviceName);
         deviceName.setText(device.getName());
-        TextView deviceAddress = (TextView) vi.findViewById(R.id.deviceAddress);
+        TextView deviceAddress = vi.findViewById(R.id.deviceAddress);
         deviceAddress.setText(device.getAddress());
         return vi;
         /* convertView = mLayoutInflater.inflate(mViewResourceId, null);
