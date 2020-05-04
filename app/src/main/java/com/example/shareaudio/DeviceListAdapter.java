@@ -33,23 +33,9 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
             vi = mLayoutInflater.inflate(R.layout.device_adapter_view, null);
         }
         TextView deviceName = vi.findViewById(R.id.deviceName);
-        deviceName.setText(device.getName());
-        return vi;
-        /* convertView = mLayoutInflater.inflate(mViewResourceId, null);
-
-        BluetoothDevice device = mDevices.get(position);
-
-        if (device != null) {
-            TextView deviceName = convertView.findViewById(R.id.deviceName);
-            TextView deviceAddress = convertView.findViewById(R.id.deviceAddress);
-
-            if (deviceName != null) {
-                deviceName.setText(device.getName());
-            }
-            if (deviceAddress != null) {
-                deviceAddress.setText(device.getAddress());
-            }
+        if (!(device.getName().length() == 0)) {
+            deviceName.setText(device.getName());
         }
-        return convertView; */
+        return vi;
     }
 }
