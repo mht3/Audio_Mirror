@@ -176,7 +176,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         Toast.makeText(this,"Pairing with " + item,Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onItemClick: You Clicked on a device.");
         //devices.get(position).createBond();
-
     }
 
     public void setPairedDevices(View v) {
