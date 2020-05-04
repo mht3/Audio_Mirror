@@ -127,7 +127,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                     bluetoothAdapter.disable();
                     Context context = getApplicationContext();
                     Log.d(TAG, "Turning bluetooth off");
-
                     CharSequence text = "TURNING OFF BLUETOOTH";
                     int duration = Toast.LENGTH_LONG;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -142,17 +141,33 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 pairedDevicesText.setVisibility(View.VISIBLE);
                 unpairedListView.setVisibility(View.INVISIBLE);
                 discoverableDevicesText.setVisibility(View.INVISIBLE);
-                if (!bluetoothAdapter.isDiscovering() && bluetoothAdapter != null) {
+                if (bluetoothAdapter != null) {
+                    if (bluetoothAdapter.isDiscovering()) {
+                        bluetoothAdapter.cancelDiscovery();
+                    }
                     YoYo.with(Techniques.Tada).duration(700).repeat(1).playOn(pairedDevicesButton);
                     setPairedDevices(pairedListView);
-                    pairedListView.setOnItemClickListener(MainActivity.this);
+                    pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String currentName = bondedDevices.get(position);
+                            BluetoothDevice currentDevice = null;
+                            for (BluetoothDevice bt : deviceSet) {
+                                if (bt.getName().equals(currentName)) {
+                                    currentDevice = bt;
+                                }
+                            }
+                            ClientClass clientClass = new ClientClass(currentDevice, bluetoothAdapter);
+                            clientClass.run();
+                        }
+                    });
                 }
-                if (bluetoothAdapter.isDiscovering() && bluetoothAdapter != null) {
+                /* if (bluetoothAdapter.isDiscovering() && bluetoothAdapter != null) {
                     bluetoothAdapter.cancelDiscovery();
                     Log.d(TAG, "btnDiscover: Canceling discovery.");
                     bluetoothAdapter.startDiscovery();
                     pairedListView.setOnItemClickListener(MainActivity.this);
-                }
+                } */
             }
         });
         discover.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +177,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 pairedDevicesText.setVisibility(View.INVISIBLE);
                 unpairedListView.setVisibility(View.VISIBLE);
                 unpairedListView.setAdapter(null);
+                devices = new ArrayList<BluetoothDevice>();
                 discoverableDevicesText.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.Tada).duration(700).repeat(1).playOn(discover);
                 if (bluetoothAdapter != null ) {
@@ -215,15 +231,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
             if (action.equals(BluetoothDevice.ACTION_FOUND)){
                 BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
-                boolean doesContain = false;
-                for (int i = 0; i < devices.size(); i++) {
-                    if (device.getAddress().equals(devices.get(i).getAddress())) {
-                        doesContain = true;
-                    }
-                }
-                if (!doesContain) {
-                    devices.add(device);
-                }
+                devices.add(device);
                 Log.d(TAG, "onReceive: " + device.getName() + ": " + device.getAddress());
                 deviceListAdapter = new DeviceListAdapter(context, R.layout.device_adapter_view, devices);
                 unpairedListView.setAdapter(deviceListAdapter);
