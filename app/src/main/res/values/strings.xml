@@ -2,7 +2,7 @@
     <string name="app_name">Share Audio</string>
     <string name="share_audio">Share Audio</string>
     <string name="discover">DISCOVER</string>
-    <string name="bluetooth">BLUETOOTH</string>
+    <string name="bluetooth">ON/OFF</string>
     <string name="off">OFF</string>
     <string name="on">ON</string>
     <string name="todo">TODO</string>

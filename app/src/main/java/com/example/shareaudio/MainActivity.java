@@ -107,6 +107,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             @Override
             public void onClick(View v) {
                 if (!bluetoothAdapter.isEnabled()) {
+                    discover.setEnabled(true);
+                    pairedDevicesButton.setEnabled(true);
                     Log.d(TAG, "Turning bluetooth on");
                     toggleSwitch.setActivated(true);
                     bluetoothAdapter.enable();
@@ -116,6 +118,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 } else {
+                    discover.setEnabled(false);
+                    pairedDevicesButton.setEnabled(false);
+                    pairedListView.setVisibility(View.INVISIBLE);
+                    unpairedListView.setVisibility(View.INVISIBLE);
+                    pairedDevicesText.setVisibility(View.INVISIBLE);
+                    discoverableDevicesText.setVisibility(View.INVISIBLE);
                     bluetoothAdapter.disable();
                     Context context = getApplicationContext();
                     Log.d(TAG, "Turning bluetooth off");

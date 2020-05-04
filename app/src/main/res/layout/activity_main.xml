@@ -24,12 +24,12 @@
 
     <TextView
         android:id="@+id/not_supported"
-        android:layout_width="355dp"
-        android:layout_height="43dp"
+        android:layout_width="373dp"
+        android:layout_height="35dp"
         android:text="@string/not_supported"
         android:textAlignment="center"
         android:textColor="#FA0000"
-        android:textSize="32sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,25 +38,23 @@
 
     <Button
         android:id="@+id/discover"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="148dp"
+        android:layout_height="152dp"
         android:background="@drawable/main_menu_button"
         android:ellipsize="none"
         android:text="@string/discover"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/not_supported"
-        app:layout_constraintVertical_bias="0.01999998" />
+        app:layout_constraintTop_toBottomOf="@+id/not_supported" />
 
     <Switch
         android:id="@+id/on_off"
-        android:layout_width="184dp"
-        android:layout_height="33dp"
+        android:layout_width="139dp"
+        android:layout_height="25dp"
         android:backgroundTint="#00962D2D"
         android:buttonTint="#D6E748"
         android:linksClickable="false"
@@ -75,23 +73,20 @@
         android:trackTint="#D6E748"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.211"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/discover"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/display_paired_devices"
-        android:layout_width="131dp"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="49dp"
         android:text="@string/display_paired_devices"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/on_off"
-        app:layout_constraintTop_toBottomOf="@+id/discover"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/discover" />
 
     <ListView
         android:id="@+id/pairedListView"
@@ -101,7 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/discover"
+        app:layout_constraintTop_toBottomOf="@+id/display_paired_devices"
         app:layout_constraintVertical_bias="0.92" />
 
     <ListView
@@ -112,7 +107,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/discover"
+        app:layout_constraintTop_toBottomOf="@+id/display_paired_devices"
         app:layout_constraintVertical_bias="0.92" />
 
     <TextView

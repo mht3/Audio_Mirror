@@ -33,7 +33,7 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
             vi = mLayoutInflater.inflate(R.layout.device_adapter_view, null);
         }
         TextView deviceName = vi.findViewById(R.id.deviceName);
-        if (!(device.getName().length() == 0)) {
+        if (!(device.getName() == null || device.getName().length() == 0)) {
             deviceName.setText(device.getName());
         }
         return vi;
