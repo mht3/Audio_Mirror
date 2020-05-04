@@ -7,7 +7,10 @@
     <string name="on">ON</string>
     <string name="todo">TODO</string>
     <string name="not_supported">Device Not Supported!</string>
-    <string name="devices">DEVICES:</string>
+    <string name="devices">PAIRED DEVICES:</string>
+    <string name="display_paired_devices">PAIRED DEVICES</string>
+    <string name="discoverable_devices">DISCOVERABLE DEVICES:</string>
+
 
 
 </resources>
