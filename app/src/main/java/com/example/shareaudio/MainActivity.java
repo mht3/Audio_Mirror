@@ -215,7 +215,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
             if (action.equals(BluetoothDevice.ACTION_FOUND)){
                 BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
-                devices.add(device);
+                boolean doesContain = false;
+                for (int i = 0; i < devices.size(); i++) {
+                    if (device.getAddress().equals(devices.get(i).getAddress())) {
+                        doesContain = true;
+                    }
+                }
+                if (!doesContain) {
+                    devices.add(device);
+                }
                 Log.d(TAG, "onReceive: " + device.getName() + ": " + device.getAddress());
                 deviceListAdapter = new DeviceListAdapter(context, R.layout.device_adapter_view, devices);
                 unpairedListView.setAdapter(deviceListAdapter);
