@@ -5,14 +5,9 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/deviceName"
-        android:textSize="15sp"/>
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/deviceAddress"
-        android:textSize="15sp"/>
+        android:textSize="30sp" />
+
 </LinearLayout>

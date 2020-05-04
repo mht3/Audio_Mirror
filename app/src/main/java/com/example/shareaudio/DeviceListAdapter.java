@@ -34,8 +34,6 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
         }
         TextView deviceName = vi.findViewById(R.id.deviceName);
         deviceName.setText(device.getName());
-        TextView deviceAddress = vi.findViewById(R.id.deviceAddress);
-        deviceAddress.setText(device.getAddress());
         return vi;
         /* convertView = mLayoutInflater.inflate(mViewResourceId, null);
 
