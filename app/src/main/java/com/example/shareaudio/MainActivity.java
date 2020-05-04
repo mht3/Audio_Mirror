@@ -161,6 +161,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 pairedListView.setVisibility(View.INVISIBLE);
                 pairedDevicesText.setVisibility(View.INVISIBLE);
                 unpairedListView.setVisibility(View.VISIBLE);
+                unpairedListView.setAdapter(null);
                 discoverableDevicesText.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.Tada).duration(700).repeat(1).playOn(discover);
                 if (bluetoothAdapter != null ) {
