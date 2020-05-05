@@ -31,6 +31,21 @@ import java.util.Set;
 import java.util.UUID;
 
 
+/**
+ * Main Class for share audio.
+ *
+ * Helpful sources:
+ * Bluetooth API Documentation
+ *https://developer.android.com/guide/topics/connectivity/bluetooth
+ *
+ * Great intro tutorial on the Bluetooth API
+ * https://www.c-sharpcorner.com/article/create-bluetooth-android-application-using-android-studio/
+ *
+ * Mitch Tabian Bluetooth Tutorials -
+ * https://github.com/mitchtabian/Sending-and-Receiving-Data-with-Bluetooth
+ * /blob/1b45166af3661503906fda02e62ca5ad1f590bdc/Bluetooth-Communication/app
+ * /src/main/java/com/example/user/bluetooth_communication/MainActivity.java#L228
+ */
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
     private static final int REQUEST_ENABLE_BT = 0;
     private static final String TAG = "MainActivity";
@@ -185,17 +200,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                 Toast toast2 = Toast.makeText(pairedListView.getContext(), text2, duration2);
                                 toast2.show();
                             }
-                            //ClientClass clientClass = new ClientClass(currentDevice, bluetoothAdapter);
-                            //clientClass.run();
+
                         }
                     });
                 }
-                /* if (bluetoothAdapter.isDiscovering() && bluetoothAdapter != null) {
-                    bluetoothAdapter.cancelDiscovery();
-                    Log.d(TAG, "btnDiscover: Canceling discovery.");
-                    bluetoothAdapter.startDiscovery();
-                    pairedListView.setOnItemClickListener(MainActivity.this);
-                } */
             }
         });
         discover.setOnClickListener(new View.OnClickListener() {
