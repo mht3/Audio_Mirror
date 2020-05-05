@@ -23,8 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +31,7 @@ import java.util.UUID;
 
 /**
  * Main Class for share audio.
+ * Created by Matt Taylor and Eric Monson
  *
  * Helpful sources:
  * Bluetooth API Documentation
@@ -41,38 +40,72 @@ import java.util.UUID;
  * Great intro tutorial on the Bluetooth API
  * https://www.c-sharpcorner.com/article/create-bluetooth-android-application-using-android-studio/
  *
- * Mitch Tabian Bluetooth Tutorials -
- * https://github.com/mitchtabian/Sending-and-Receiving-Data-with-Bluetooth
- * /blob/1b45166af3661503906fda02e62ca5ad1f590bdc/Bluetooth-Communication/app
- * /src/main/java/com/example/user/bluetooth_communication/MainActivity.java#L228
+ * Mitch Tabian Bluetooth Tutorial -
+ * https://www.youtube.com/watch?v=YJ0JQXcNNTA
  */
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
+
+    /**
+     * The integer value that relates to requesting to enable the bluetooth.
+     */
     private static final int REQUEST_ENABLE_BT = 0;
+
+    /**
+     * Our main activity tag used in Logs for testing
+     */
     private static final String TAG = "MainActivity";
+
+    /**
+     * The bluetooth adapter from the Bluetooth API
+     */
     private BluetoothAdapter bluetoothAdapter;
+
+    /**
+     * set of bonded bluetooth devices.
+     */
     private Set<BluetoothDevice> deviceSet;
+
+    /**
+     * Call to the Bluetoth connection service class.
+     * This is where a socket is made and the device is physically connected.
+     */
     private BluetoothConnectionService bluetoothConnection;
 
     /**
-     * A set of paired devices.
+     * A List of paired bluetooth devices received from the bluetooth set.
      */
     private ArrayList<BluetoothDevice> devices;
 
     /**
-     * The name of each paired device in the set.
+     * The name of each paired device in the set. Accessed by pressing the paired devices button.
      */
     private ListView pairedListView;
+
+    /**
+     * List view for the unpaired devices. Accessed by pressing the discover button.
+     */
     private ListView unpairedListView;
 
+    /**
+     * Devicelist adapter used for unpaired listview Display.
+     */
     private DeviceListAdapter deviceListAdapter;
+
+    /**
+     * A list of strings of the bonded bluetooth devices.
+     */
     private ArrayList<String> bondedDevices;
-    private BluetoothDevice btDevice;
+
+
+    /**
+     * Array of Parcel Universally Unique Identifiers for a device that is used to create a connection.
+     */
     private ParcelUuid[] mDeviceUUIDs;
-    private BluetoothConnector connector;
 
 
-
-
+    /**
+     * Unregisters the broadcast receivers once the app is closed.
+     */
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: called.");
@@ -81,6 +114,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         super.onDestroy();
     }
 
+    /**
+     * onCreate method used to set up the display, register receivers, and the bluetooth adapter.
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +131,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         final TextView not_supported = findViewById(R.id.not_supported);
         final TextView pairedDevicesText = findViewById(R.id.pairedDevices);
         final TextView discoverableDevicesText = findViewById(R.id.discoverable_devices);
-
-
         not_supported.setVisibility(View.INVISIBLE);
         final Button discover = findViewById(R.id.discover);
         pairedListView = findViewById(R.id.pairedListView);
@@ -123,6 +158,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         }
         toggleSwitch.setOnClickListener(new View.OnClickListener() {
+            /**
+             * On click listener for the Bluetooth on/off toggle switch.
+             * @param v the current view
+             */
             @Override
             public void onClick(View v) {
                 if (!bluetoothAdapter.isEnabled()) {
@@ -153,7 +192,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 }
             }
         });
+
         pairedDevicesButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * On click listener for the paired devices button. This displays the list of paired devices.
+             * @param arg0 the current view.
+             */
             @Override
             public void onClick(View arg0) {
                 pairedListView.setVisibility(View.VISIBLE);
@@ -167,6 +211,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                     YoYo.with(Techniques.Tada).duration(700).repeat(1).playOn(pairedDevicesButton);
                     setPairedDevices(pairedListView);
                     pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        /**
+                         * Tries to connect each bluetooth device that is clicked.
+                         * @param parent parent view for the paired list view.
+                         * @param view the current view from the item.
+                         * @param position the position of the item that was clicked from the list view.
+                         * @param id the id in
+                         */
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String currentName = bondedDevices.get(position);
@@ -188,8 +239,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                 uuidList.add(u.getUuid());
                             }
                             try {
-                                //connector = new BluetoothConnector(currentDevice, false, bluetoothAdapter, uuidList);
-                                //connector.connect();
+
                                 bluetoothConnection = new BluetoothConnectionService(MainActivity.this, bluetoothAdapter);
                                 bluetoothConnection.startClient(currentDevice, mDeviceUUIDs);
                             } catch (NullPointerException e) {
@@ -207,6 +257,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             }
         });
         discover.setOnClickListener(new View.OnClickListener() {
+            /**
+             * On click listener for the discover button. An animation is used and the unpaired list
+             * view is made visible. Priority goes as follows: If the name of the bluetooth device
+             * is available, device_adapter_view.xml will display the devices NAME.
+             * If the deviceName is unavailable, the device ADDRESS will be displayed.
+             * @param v the view for the unpairedListView
+             */
             @Override
             public void onClick(View v) {
                 pairedListView.setVisibility(View.INVISIBLE);
@@ -218,6 +275,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 YoYo.with(Techniques.Tada).duration(700).repeat(1).playOn(discover);
                 if (bluetoothAdapter != null ) {
                     unpairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        /**
+                         *
+                         * @param parent unpairedListView parent
+                         * @param view current view from the item clicked.
+                         * @param position the position of the item clicked as an integer.
+                         * @param id the id of the item in the form of a long
+                         */
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             bluetoothAdapter.cancelDiscovery();
@@ -233,7 +297,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                                 Log.d(TAG, "Trying to pair with " + deviceName);
                                 devices.get(position).createBond();
-                                btDevice = devices.get(position);
                                 bluetoothConnection = new BluetoothConnectionService(MainActivity.this, bluetoothAdapter);
                             }
                         }
@@ -246,18 +309,34 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     }
 
 
-
+    /**
+     * Inflation options for our settings.
+     * Note that the menu is not dispayed. Hopefully this functionality will come in the near future.
+     * @param menu the menu as seen in the res folder.
+     * @return returns true that the menu was in fact inflated.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
+    /**
+     * Broadcast receiver is used to create the UnpairedList using the Bluetooth API's preset final variables.
+     */
     private BroadcastReceiver makeUnpairedList = new BroadcastReceiver() {
+
+        /**
+         * Once the action is received, the broadcast receiver will initialize the deviceListAdapter so that
+         * the dislay can be inflated.
+         * @param context the current context received by the broadcast receiver.
+         * @param intent the intent received about the action.
+         */
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
-            Log.d(TAG, "onReceive: ACTION FOUND.");
+            Log.d(TAG, "onReceive: ACTION FOUND ");
 
             if (action.equals(BluetoothDevice.ACTION_FOUND)){
                 BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
@@ -268,6 +347,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             }
         }
     };
+
+    /**
+     * The broadcast receiver for when the action found through the bluetooth adapter is changed.
+     * Note that this is currently unused, but will be necessary for further implementations.
+     */
     private final BroadcastReceiver actionStateChange = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -277,23 +361,31 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
                 switch(state){
                     case BluetoothAdapter.STATE_OFF:
-                        Log.d(TAG, "onReceive: STATE OFF");
+                        Log.d(TAG, "onReceive: STATE IS OFF");
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
-                        Log.d(TAG, "mBroadcastReceiver1: STATE TURNING OFF");
+                        Log.d(TAG, "actionStateChange: STATE TURNING OFF");
                         break;
                     case BluetoothAdapter.STATE_ON:
-                        Log.d(TAG, "mBroadcastReceiver1: STATE ON");
+                        Log.d(TAG, "actionStateChange: STATE ON");
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
-                        Log.d(TAG, "mBroadcastReceiver1: STATE TURNING ON");
+                        Log.d(TAG, "actionStateChange: STATE IS TURNING ON");
                         break;
                 }
             }
         }
     };
 
+    /**
+     * Broadcast receiver for when the bond state of the unpaired device changes.
+     */
     private final BroadcastReceiver checkBondStateChange = new BroadcastReceiver() {
+        /**
+         * Once received logs are created that show how the bond is changing and when it is bonded.
+         * @param context the current context (checkBondStateChange)
+         * @param intent the intent filter for ACTION_BOND_STATE_CHANGED
+         */
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
@@ -303,22 +395,26 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 //3 cases:
                 //case 1:
                 if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-                    Log.d(TAG, "BroadcastReceiver: BOUND_BONDED.");
-                    btDevice = device;
+                    Log.d(TAG, "checkBondStateChange: DEVICE IS BONDED.");
                 }
                 //case 2:
                 if (device.getBondState() == BluetoothDevice.BOND_BONDING) {
-                    Log.d(TAG, "BroadcastReceiver: BOUND_BONDING.");
+                    Log.d(TAG, "checkBondStateChange: DEVICE IS BONDING.");
                 }
                 //case 3:
                 if (device.getBondState() == BluetoothDevice.BOND_NONE) {
-                    Log.d(TAG, "BroadcastReceiver: BOUND_NONE.");
+                    Log.d(TAG, "checkBondStateChange: BOND_NONE.");
                 }
             }
         }
     };
 
 
+    /**
+     * called when the discover button is pressed.
+     * starts discovery and begins the pairing process by registering the UnpairedList receiver.
+     * @param view the view of the unpaired devices listview
+     */
     public void discover(View view) {
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
 
@@ -326,8 +422,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             bluetoothAdapter.cancelDiscovery();
             Log.d(TAG, "btnDiscover: Canceling discovery.");
 
-            //check BT permissions in manifest
-            checkBTPermissions();
+            //checks Bluetooth permissions in manifest
+            checkBluetoothPermissions();
 
             bluetoothAdapter.startDiscovery();
             IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -335,15 +431,19 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         }
         if(!bluetoothAdapter.isDiscovering()){
 
-            //check BT permissions in manifest
-            checkBTPermissions();
+            //checks Bluetoothpermissions in manifest
+            checkBluetoothPermissions();
 
             bluetoothAdapter.startDiscovery();
             IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(makeUnpairedList, discoverDevicesIntent);
         }
     }
-    private void checkBTPermissions() {
+
+    /**
+     * Permissions have to be checked for android devices older than Lollipop.
+     */
+    private void checkBluetoothPermissions() {
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
             permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
@@ -352,13 +452,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                         Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Any number
             }
         }else{
-            Log.d(TAG, "checkBTPermissions: No need to check permissions. SDK version < LOLLIPOP.");
+            Log.d(TAG, "checkBluetoothPermissions: No need to check permissions. SDK version < LOLLIPOP.");
         }
     }
 
 
-
-
+    /**
+     * Unused item click listener. Present because we implement in in Main Activity.
+     * @param parent N/A
+     * @param view N/A
+     * @param position N/A
+     * @param id N/A
+     */
     public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
         bluetoothAdapter.cancelDiscovery();
         String item = (String) pairedListView.getItemAtPosition(position);
@@ -367,6 +472,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     }
 
+    /**
+     * The bonded devices are received from the bluetooth set.
+     * When the Paired Devices button is clicked, this method is called and displays
+     * a list of paired devices using the pairedListView.
+     * @param v The current view for the pairedListView
+     */
     public void setPairedDevices(View v) {
         Toast.makeText(getApplicationContext(), "Showing Paired Devices", Toast.LENGTH_SHORT).show();
         deviceSet = bluetoothAdapter.getBondedDevices();
