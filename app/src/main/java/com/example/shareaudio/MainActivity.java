@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.Menu;
 import android.bluetooth.BluetoothAdapter;
@@ -23,7 +24,9 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,8 +36,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private static final String TAG = "MainActivity";
     private BluetoothAdapter bluetoothAdapter;
     private Set<BluetoothDevice> deviceSet;
-    private BluetoothConnectionService mBluetoothConnection;
-
+    private BluetoothConnectionService bluetoothConnection;
 
     /**
      * A set of paired devices.
@@ -50,6 +52,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private DeviceListAdapter deviceListAdapter;
     private ArrayList<String> bondedDevices;
     private BluetoothDevice btDevice;
+    private ParcelUuid[] mDeviceUUIDs;
+    private BluetoothConnector connector;
+
+
 
 
     @Override
@@ -57,8 +63,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         Log.d(TAG, "onDestroy: called.");
         unregisterReceiver(makeUnpairedList);
         unregisterReceiver(checkBondStateChange);
-        unregisterReceiver(actionFoundReceiver);
-        unregisterReceiver(actionFoundReceiver);
         super.onDestroy();
     }
 
@@ -157,8 +161,32 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                     currentDevice = bt;
                                 }
                             }
-                            ClientClass clientClass = new ClientClass(currentDevice, bluetoothAdapter);
-                            clientClass.run();
+                            CharSequence text = "Connecting with " + currentName;
+                            Log.d(TAG, "Connecting with " + currentName);
+                            int duration = Toast.LENGTH_LONG;
+                            Toast toast = Toast.makeText(pairedListView.getContext(), text, duration);
+                            toast.show();
+                            bluetoothAdapter.cancelDiscovery();
+                            mDeviceUUIDs = currentDevice.getUuids();
+                            List<UUID> uuidList = new ArrayList<>();
+                            for(ParcelUuid u : mDeviceUUIDs) {
+                                uuidList.add(u.getUuid());
+                            }
+                            try {
+                                //connector = new BluetoothConnector(currentDevice, false, bluetoothAdapter, uuidList);
+                                //connector.connect();
+                                bluetoothConnection = new BluetoothConnectionService(MainActivity.this, bluetoothAdapter);
+                                bluetoothConnection.startClient(currentDevice, mDeviceUUIDs);
+                            } catch (NullPointerException e) {
+                                Log.d(TAG, "Failed due to NP exception at index " + position);
+
+                                CharSequence text2 = "Unable to connect";
+                                int duration2 = Toast.LENGTH_LONG;
+                                Toast toast2 = Toast.makeText(pairedListView.getContext(), text2, duration2);
+                                toast2.show();
+                            }
+                            //ClientClass clientClass = new ClientClass(currentDevice, bluetoothAdapter);
+                            //clientClass.run();
                         }
                     });
                 }
@@ -177,7 +205,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 pairedDevicesText.setVisibility(View.INVISIBLE);
                 unpairedListView.setVisibility(View.VISIBLE);
                 unpairedListView.setAdapter(null);
-                devices = new ArrayList<BluetoothDevice>();
+                devices = new ArrayList<>();
                 discoverableDevicesText.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.Tada).duration(700).repeat(1).playOn(discover);
                 if (bluetoothAdapter != null ) {
@@ -194,13 +222,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                             Log.d(TAG, "onItemClick: deviceAddress = " + deviceAddress);
 
                             //create the bond.
-                            //NOTE: Requires API 17+? I think this is JellyBean
                             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-
                                 Log.d(TAG, "Trying to pair with " + deviceName);
                                 devices.get(position).createBond();
                                 btDevice = devices.get(position);
-                                mBluetoothConnection = new BluetoothConnectionService(MainActivity.this);
+                                bluetoothConnection = new BluetoothConnectionService(MainActivity.this, bluetoothAdapter);
                             }
                         }
                     });
@@ -210,11 +236,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         });
 
     }
-    public void startBTConnection(BluetoothDevice device, UUID uuid){
-        Log.d(TAG, "startBTConnection: Initializing RFCOM Bluetooth Connection.");
 
-        mBluetoothConnection.startClient(device,uuid);
-    }
 
 
     @Override
@@ -235,6 +257,30 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 Log.d(TAG, "onReceive: " + device.getName() + ": " + device.getAddress());
                 deviceListAdapter = new DeviceListAdapter(context, R.layout.device_adapter_view, devices);
                 unpairedListView.setAdapter(deviceListAdapter);
+            }
+        }
+    };
+    private final BroadcastReceiver actionStateChange = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            // When discovery finds a device
+            if (action.equals(bluetoothAdapter.ACTION_STATE_CHANGED)) {
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, bluetoothAdapter.ERROR);
+
+                switch(state){
+                    case BluetoothAdapter.STATE_OFF:
+                        Log.d(TAG, "onReceive: STATE OFF");
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_OFF:
+                        Log.d(TAG, "mBroadcastReceiver1: STATE TURNING OFF");
+                        break;
+                    case BluetoothAdapter.STATE_ON:
+                        Log.d(TAG, "mBroadcastReceiver1: STATE ON");
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_ON:
+                        Log.d(TAG, "mBroadcastReceiver1: STATE TURNING ON");
+                        break;
+                }
             }
         }
     };
@@ -264,33 +310,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         }
     };
 
-    /**
-     * Broadcast receiver for action found
-     */
-    private final BroadcastReceiver actionFoundReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            // When discovery finds a device
-            if (action.equals(bluetoothAdapter.ACTION_STATE_CHANGED)) {
-                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, bluetoothAdapter.ERROR);
 
-                switch(state){
-                    case BluetoothAdapter.STATE_OFF:
-                        Log.d(TAG, "onReceive: STATE OFF");
-                        break;
-                    case BluetoothAdapter.STATE_TURNING_OFF:
-                        Log.d(TAG, "mBroadcastReceiver1: STATE TURNING OFF");
-                        break;
-                    case BluetoothAdapter.STATE_ON:
-                        Log.d(TAG, "mBroadcastReceiver1: STATE ON");
-                        break;
-                    case BluetoothAdapter.STATE_TURNING_ON:
-                        Log.d(TAG, "mBroadcastReceiver1: STATE TURNING ON");
-                        break;
-                }
-            }
-        }
-    };
     public void discover(View view) {
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
 
