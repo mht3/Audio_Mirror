@@ -68,7 +68,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private ArrayList<String> bondedDevices;
     private BluetoothDevice btDevice;
     private ParcelUuid[] mDeviceUUIDs;
-    private BluetoothConnector connector;
 
 
 

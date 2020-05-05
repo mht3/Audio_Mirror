@@ -15,6 +15,12 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.UUID;
 
+/**
+ * This class is heavily inspired by Mitch Tabian's BluetoothConnectionService that he demonstrates in his
+ * YouTube videos. However, we have modified it to include a check that runs through each UUID and attempts
+ * to connect to the Bluetooth device with that ID. Otherwise this class handles the actual socket creation,
+ * maintenance, and information transfer.
+ */
 public class BluetoothConnectionService {
     private static final String TAG = "BluetoothConnectionService";
 
@@ -299,7 +305,7 @@ public class BluetoothConnectionService {
     }
 
     /**
-     * Write to the ConnectedThread in an unsynchronized manner
+     * Write to the ConnectedThread in an un-synchronized manner.
      *
      * @param out The bytes to write
      * @see ConnectedThread#write(byte[])
