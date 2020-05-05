@@ -3,6 +3,9 @@ package com.example.shareaudio;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.util.UUID;
 
@@ -25,12 +28,9 @@ public class ClientClass {
         adapter.cancelDiscovery();
         try {
             socket.connect();
+            Log.d("CLIENT CLASS: ", "Client received");
         } catch (IOException e) {
-            try {
-                socket.close();
-            } catch (IOException p) {
-                p.printStackTrace();
-            }
+            Log.d("CLIENT CLASS: ", "Client failed");
             e.printStackTrace();
         }
     }
