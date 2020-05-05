@@ -119,11 +119,11 @@ public class BluetoothConnectionService {
 
         public void run(){
             BluetoothSocket tmp = null;
-            boolean isCreated = false;
             Log.i(TAG, "RUN mConnectThread ");
 
             // Get a BluetoothSocket for a connection with the
             // given BluetoothDevice
+            boolean isCreated = false;
             for(ParcelUuid p : parcelUuids) {
                 deviceUUID = p.getUuid();
                 try {
@@ -137,7 +137,7 @@ public class BluetoothConnectionService {
                     continue;
                 }
             }
-            if (isCreated) {
+            if (isCreated == false) {
                 try {
                     Log.d(TAG, "ConnectThread: Trying to create InsecureRfcommSocket using UUID: "
                             + MY_UUID);
@@ -146,7 +146,6 @@ public class BluetoothConnectionService {
                     Log.e(TAG, "ConnectThread: Could not create InsecureRfcommSocket " + h.getMessage());
                 }
             }
-
             mmSocket = tmp;
 
             // Always cancel discovery because it will slow down a connection
