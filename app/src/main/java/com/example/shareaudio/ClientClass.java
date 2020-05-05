@@ -26,6 +26,11 @@ public class ClientClass {
         try {
             socket.connect();
         } catch (IOException e) {
+            try {
+                socket.close();
+            } catch (IOException p) {
+                p.printStackTrace();
+            }
             e.printStackTrace();
         }
     }

@@ -76,7 +76,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         final TextView pairedDevicesText = findViewById(R.id.pairedDevices);
         final TextView discoverableDevicesText = findViewById(R.id.discoverable_devices);
 
-
         not_supported.setVisibility(View.INVISIBLE);
         final Button discover = findViewById(R.id.discover);
         pairedListView = findViewById(R.id.pairedListView);
@@ -86,13 +85,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         pairedDevicesText.setVisibility(View.INVISIBLE);
         discoverableDevicesText.setVisibility(View.INVISIBLE);
 
-
         final Button pairedDevicesButton = findViewById(R.id.display_paired_devices);
-
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(checkBondStateChange, filter);
-
 
 
         if (bluetoothAdapter == null) {
@@ -157,8 +153,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                                     currentDevice = bt;
                                 }
                             }
-                            ClientClass clientClass = new ClientClass(currentDevice, bluetoothAdapter);
-                            clientClass.run();
+                            startBTConnection(currentDevice, UUID.randomUUID());
                         }
                     });
                 }
@@ -210,9 +205,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         });
 
     }
+
+    /**
+     * Starts a BlueTooth Connection with Bluetooth connection service.
+     * @param device
+     * @param uuid
+     */
     public void startBTConnection(BluetoothDevice device, UUID uuid){
         Log.d(TAG, "startBTConnection: Initializing RFCOM Bluetooth Connection.");
-
         mBluetoothConnection.startClient(device,uuid);
     }
 
