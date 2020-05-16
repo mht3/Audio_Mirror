@@ -28,10 +28,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-
 /**
  * Main Class for share audio.
- * Created by Matt Taylor, Eric Monson, and Joe Brown
+ * Developed by Matt Taylor, Eric Monson, and Joe Brown
  *
  * Helpful sources:
  * Bluetooth API Documentation
